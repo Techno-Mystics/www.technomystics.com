@@ -50,12 +50,17 @@
 
 <?php
 include 'include/header.html';
+//&from=1641887774891&to=1642060574892
+
+$dt = new DateTimeImmutable();
+$dtInterval = $dt->modify("-48 hours");
+
 ?>
 
 <hr>
 
 	<div class="w-100 p-3">
-	<iframe src="https://stats.technomystics.com:3000/d/lj6brF17k/stats-technomystics-com?orgId=1&from=1641887774891&to=1642060574892&kiosk" width="100%" height="1600px" frameborder="0"></iframe>
+	<iframe src="https://stats.technomystics.com:3000/d/lj6brF17k/stats-technomystics-com?orgId=1&from=<?php echo strtotime($dtInterval->format('Y-m-d H:i:s'))*1000; ?>&to=<?php echo strtotime($dt->format('Y-m-d H:i:s'))*1000; ?>&kiosk" width="100%" height="1600px" frameborder="0"></iframe>
 	</div>
 
 <?php
