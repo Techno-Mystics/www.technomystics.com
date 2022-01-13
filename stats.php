@@ -63,7 +63,7 @@
 <hr>
 
 	<div class="w-100 h-100 p-3">
-	<iframe src="https://stats.technomystics.com:3000/d/lj6brF17k/stats-technomystics-com?orgId=1&kiosk" width="100%" height="100%" frameborder="0"></iframe>
+	<iframe src="https://stats.technomystics.com:3000/d/lj6brF17k/stats-technomystics-com?orgId=1&from=1641887774891&to=1642060574892&kiosk" width="100%" height="100%" frameborder="0"></iframe>
 	</div>
 </div>
 
