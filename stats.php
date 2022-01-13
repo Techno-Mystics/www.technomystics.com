@@ -38,34 +38,37 @@
     
     <!-- Custom styles for this template -->
     <link href="/css/index.css" rel="stylesheet">
+    
+    <!-- Custom JavaScript -->
+    <script src="/js/m_menu.js"></script>
 </head>
 
 
 <body class="d-flex h-100 w-100 text-center text-white bg-dark">
 <div class=" d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0"><img src="/media/pics/technomystic.png" height="100px"></h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link" aria-current="page" href="/">Home</a>
-	<a class="nav-link" href="https://social.technomystics.com">Social</a>
-	<a class="nav-link" href="https://discourse.technomystics.com">Discourse</a>
-	<a class="nav-link" href="https://matrix.to/#/#the-lodge:matrix.technomystics.com">Matrix</a>
-	<a class="nav-link" href="https://mail.technomystics.com">Mail</a>
-	<a class="nav-link active" href="https://stats.technomystics.com">Stats</a>
-	<!--
-	<a class="nav-link" href="#">Features</a>
-        <a class="nav-link" href="#">Contact</a>
-	-->
-      </nav>
-    </div>
-  </header>
+
+
+<?php
+include 'include/header.html';
+?>
+
 <hr>
 
-	<div class="w-100 h-100 p-3">
-	<iframe src="https://stats.technomystics.com:3000/d/lj6brF17k/stats-technomystics-com?orgId=1&from=1641887774891&to=1642060574892&kiosk" width="100%" height="100%" frameborder="0"></iframe>
+	<div class="w-100 p-3">
+	<iframe src="https://stats.technomystics.com:3000/d/lj6brF17k/stats-technomystics-com?orgId=1&from=1641887774891&to=1642060574892&kiosk" width="100%" height="1600px" frameborder="0"></iframe>
 	</div>
-</div>
 
+<?php
+include 'include/footer.html';
+?>
+
+</div>
 </body>
+
+
+<script>
+setMenuItem("m_stats");
+</script>
+
+
 </html>

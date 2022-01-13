@@ -40,50 +40,34 @@
     
     <!-- Custom styles for this template -->
     <link href="/css/index.css" rel="stylesheet">
+    
+    <!-- Custom JavaScript -->
+    <script src="/js/m_menu.js"></script>
   </head>
   <body class="d-flex h-100 text-center text-white bg-dark">
     
-<div class=" d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0"><img src="/media/pics/technomystic.png" height="100px"></h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-	<a class="nav-link" href="https://social.technomystics.com">Social</a>
-	<a class="nav-link" href="https://discourse.technomystics.com">Discourse</a>
-	<a class="nav-link" href="https://matrix.to/#/#the-lodge:matrix.technomystics.com">Matrix</a>
-	<a class="nav-link" href="https://mail.technomystics.com">Mail</a>
-	<a class="nav-link" href="https://technomystics.com/stats.php">Stats</a>
-	<!--
-	<a class="nav-link" href="#">Features</a>
-        <a class="nav-link" href="#">Contact</a>
-	-->
-      </nav>
-    </div>
-  </header>
+<div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
+<?php
+include 'include/header.html';
+?>
 
-  <main class="px-3">
-    <!--
-    <h1>TechnoMystics.com</h1>
-    -->
+    <div class="w-100 h-100 p-3">
     <p class="lead"><img src="/media/pics/techno.png" height="100px"> + <img src="/media/pics/mystic.png" height="100px"> = <img src="/media/pics/technomystic.png" height="100px"></p>
-    <p class="lead">
-	<!--
-      <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
-	-->
-    </p>
-  </main>
+    </div>
 
-  <footer class="mt-auto text-white-50">
 
-<!--
-    <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
--->
-
-  </footer>
+<?php
+include 'include/footer.html';
+?>
 </div>
 
 
     
   </body>
+
+<script>
+setMenuItem("m_home");
+</script>
+
 </html>
+
