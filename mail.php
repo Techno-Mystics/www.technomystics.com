@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>TechnoMystics.com</title>
+    <title>Mail.TechnoMystics.com</title>
 
     <!-- Bootstrap core CSS -->
 <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -60,11 +60,13 @@
 <?php
 include 'include/header.html';
 ?>
-
-    <div class="w-100 h-100 p-3">
-    <p class="lead"><img src="/media/pics/techno.png" height="100px"> + <img src="/media/pics/mystic.png" height="100px"> = <img src="/media/pics/technomystic.png" height="100px"></p>
-    </div>
-
+<div class="h-100 p-3 align-middle">
+	<ul class="list-group w-50 mx-auto" style="text-align: left;">
+	  <li class="list-group-item list-group-item-dark"><a class="link-dark" href="https://mail.technomystics.com/">Login To Webmail</a> <small>(roundcube)</small></li>
+	  <li class="list-group-item list-group-item-dark"><a class="link-dark" href="https://mail.technomystics.com/pfadmin/users/login.php">Manage Account</a></li>
+	  <li class="list-group-item list-group-item-dark"><a class="link-dark" href="https://discourse.technomystics.com/t/go-for-all-systems/14">New Account</a></li>
+	</ul>
+</div>
 
 <?php
 include 'include/footer.html';
@@ -76,8 +78,7 @@ include 'include/footer.html';
   </body>
 
 <script>
-setMenuItem("m_home");
+setMenuItem("m_mail");
 </script>
 
 </html>
-
