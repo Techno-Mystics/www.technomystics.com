@@ -30,7 +30,7 @@ require 'include/oauth_config.php';
 
 # Set OAuth Parameters
 $response_type="code";
-$scope=urlencode("read admin:read:accounts");
+$scope=urlencode("read");
 $tm_state=urlencode("token=".$hashed_secret."&auth_provider=mastodon");
 
 // Complete Google OAuth URL

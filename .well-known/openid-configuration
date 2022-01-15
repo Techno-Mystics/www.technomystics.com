@@ -1,0 +1,7 @@
+{
+  "token_endpoint": "https://social.technomystics.com/oauth/token",
+  "authorization_endpoint": "https://social.technomystics.com/oauth/authorize",
+  "introspection_endpoint": "https://social.technomystics.com/oauth/token/introspect",
+  "scopes_supported": [ "read" ],
+  "userinfo_endpoint": "https://social.technomystics.com/api/v1/accounts/verify_credentials"  
+}
