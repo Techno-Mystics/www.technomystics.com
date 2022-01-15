@@ -30,28 +30,15 @@ require 'include/oauth_config.php';
 
 # Set OAuth Parameters
 $response_type="code";
-$scope=urlencode("read");
+$scope=urlencode("read admin:read:accounts");
 $tm_state=urlencode("token=".$hashed_secret."&auth_provider=mastodon");
 
 // Complete Google OAuth URL
 # This is the URL we send the user to for signing-in/signing-up
 $mastodon_auth_url = $oauth_auth_endpoint."?response_type=".$response_type."&client_id=".$client_id."&scope=".$scope."&redirect_uri=".$redirect_url."&state=".$tm_state."&nonce=".$nonce;
 
-// Below is the HTML the user will interact with.
+// forward the user to mastodon oauth
+//echo $mastodon_auth_url;
+header("Location: ".$mastodon_auth_url);
+
 ?>
-<a id="google-login-button" class="btn btn-block btn-lg btn-social btn-google" href="
-	<?php 
-		echo $mastodon_auth_url;
-		header("Location: ".$mastodon_auth_url);
-
-	?>
-	">
-		Mastodon
-	</a>
-	
-	
-	
-</main>
-
-</body>
-</html>

@@ -2,11 +2,8 @@
 // Start Session
 session_start();
 
-error_log($_SERVER['HTTP_REFERER']);
-
 // SETUP LOGIN TO MASTODON
 require 'include/oauth_config.php';
-
 
 // If Session doesn't exist, redirect
 # Check for proper session
@@ -76,13 +73,12 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 		$response  = json_decode(curl_exec($ch));
 		curl_close($ch);
 		
-		# Parse the JWT
 		//var_dump($response);
 		$bearer_token = $response->access_token;
 		
 		// User exists and has authenticated
 		// We now have an access token we can use to make API queries.
-		echo "Access Token: ".$bearer_token."<br>";
+		#echo "Access Token: ".$bearer_token."<br>";
 		
 		// Verify Credentials
 		$verify_url = "https://social.technomystics.com/api/v1/accounts/verify_credentials";
@@ -91,10 +87,11 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',"Authorization: Bearer ".$bearer_token));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$response = json_decode(curl_exec($ch));
+		curl_close($ch);
 		
-		echo "Verify Credentials Response<br>";
-		var_dump($response);
-		echo "<br>";
+		#echo "Verify Credentials Response<br>";
+		#var_dump($response);
+		#echo "<br>";
 		
 		if(isset($response->id) && isset($response->username)){
 			$_SESSION['logged_in'] = true;
@@ -106,7 +103,8 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 			$_SESSION['logged_in'] = false;
 		}
 		
-		error_log("LoggedIn: ".$_SESSION['logged_in']);
+		#error_log("LoggedIn: ".$_SESSION['logged_in']);
+		error_log("login.php: Login Success - User: ".$_SESSION['username']);
 		header("Location: /");
 	}
 	else{

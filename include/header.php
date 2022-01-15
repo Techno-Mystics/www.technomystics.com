@@ -12,7 +12,7 @@
 			<a class="nav-link" id="m_stats" href="/stats.php">Stats</a>
 			<?php
 				if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-					error_log("LoggedIn");
+					error_log("header.php: Logged In User: ".$_SESSION['username']);
 					$avatar_url = $_SESSION['avatar'];
 					$username = $_SESSION['username'];
 					$avatar_html = <<<EOF

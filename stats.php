@@ -1,3 +1,8 @@
+<?php
+# Start server session
+session_start();
+?>
+
 <html>
 <head>
 	<meta charset="utf-8">
@@ -6,17 +11,11 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
 	<title>Stats.TechnoMystics.com</title>
-<!-- Bootstrap core CSS -->
-<link href="/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Favicons -->
-<link rel="apple-touch-icon" href="/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
-<link rel="icon" href="/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#7952b3">
+	<meta name="theme-color" content="#7952b3">
 
 
     <style>
@@ -50,7 +49,6 @@
 
 <?php
 include 'include/header.php';
-//&from=1641887774891&to=1642060574892
 
 $dt = new DateTimeImmutable();
 $dtInterval = $dt->modify("-48 hours");
