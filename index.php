@@ -1,3 +1,14 @@
+<?php
+# Start server session
+session_start();
+
+
+
+
+?>
+
+
+
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
@@ -40,9 +51,11 @@
     
     <!-- Custom styles for this template -->
     <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/all.css" rel="stylesheet">
     
     <!-- Custom JavaScript -->
     <script src="/js/m_menu.js"></script>
+    <script src="/js/all.js"></script>
     <script src="/js/bootstrap.min.js"></script>
   </head>
   <body class="d-flex h-100 text-center text-white bg-dark">
@@ -58,7 +71,7 @@
 </div>
 -->
 <?php
-include 'include/header.html';
+include 'include/header.php';
 ?>
 
     <div class="w-100 h-100 p-3">
@@ -67,7 +80,7 @@ include 'include/header.html';
 
 
 <?php
-include 'include/footer.html';
+include 'include/footer.php';
 ?>
 </div>
 

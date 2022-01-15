@@ -1,3 +1,12 @@
+<?php
+# Start server session
+session_start();
+
+if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+	header("Location: https://mail.technomystics.com/");
+}
+
+?>
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
@@ -58,7 +67,7 @@
 </div>
 -->
 <?php
-include 'include/header.html';
+include 'include/header.php';
 ?>
 <div class="h-100 p-3 align-middle">
 	<ul class="list-group w-50 mx-auto" style="text-align: left;">
@@ -69,7 +78,7 @@ include 'include/header.html';
 </div>
 
 <?php
-include 'include/footer.html';
+include 'include/footer.php';
 ?>
 </div>
 

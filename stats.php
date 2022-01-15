@@ -49,7 +49,7 @@
 
 
 <?php
-include 'include/header.html';
+include 'include/header.php';
 //&from=1641887774891&to=1642060574892
 
 $dt = new DateTimeImmutable();
@@ -64,7 +64,7 @@ $dtInterval = $dt->modify("-48 hours");
 	</div>
 
 <?php
-include 'include/footer.html';
+include 'include/footer.php';
 ?>
 
 </div>
