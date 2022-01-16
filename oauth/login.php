@@ -17,28 +17,28 @@ $hashed_secret=hash('sha512',$secret);
 // Google returns information we can use to validate the user along with the state we passed earlier we check for validity on our side.
 // We should be receiving a token and a auth_provider. Parse that out from $_GET['state'] or $_POST['state']
 if(isset($_GET['state'])){
-	if(preg_match('/^token=(.*)&auth_provider=(.*)&invite=(.*)$/',urldecode($_GET['state']),$matches)){
+	if(preg_match('/^token=(.*)&auth_provider=(.*)&landing=(.*)$/',urldecode($_GET['state']),$matches)){
 		$token = $matches[1];
 		$auth_provider = $matches[2];
-		$invite_code = $matches[3];
+		$final_landing = $matches[3];
 	}
 	elseif(preg_match('/^token=(.*)&auth_provider=(.*)$/',urldecode($_GET['state']),$matches)){
 		$token = $matches[1];
 		$auth_provider = $matches[2];
-		$invite_code = '-';
+		$final_landing = '-';
 	}
 }
 // Different OAuth implementations use GET and some use POST
 elseif(isset($_POST['state'])){
-	if(preg_match('/^token=(.*)&auth_provider=(.*)&invite=(.*)$/',urldecode($_POST['state']),$matches)){
+	if(preg_match('/^token=(.*)&auth_provider=(.*)&landing=(.*)$/',urldecode($_POST['state']),$matches)){
 		$token = $matches[1];
 		$auth_provider = $matches[2];
-		$invite_code = $matches[3];
+		$final_landing = $matches[3];
 	}
 	elseif(preg_match('/^token=(.*)&auth_provider=(.*)$/',urldecode($_POST['state']),$matches)){
 		$token = $matches[1];
 		$auth_provider = $matches[2];
-		$invite_code = '-';
+		$final_landing = '-';
 	}
 }
 
@@ -105,7 +105,14 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 		
 		#error_log("LoggedIn: ".$_SESSION['logged_in']);
 		error_log("login.php: Login Success - User: ".$_SESSION['username']);
-		header("Location: /");
+		switch ($final_landing) {
+			case "-":
+				header("Location: /");
+				break;
+			case "mail":
+				header("Location: /mail");
+				break;
+		}
 	}
 	else{
 		error_log("Unknown Auth Provider");

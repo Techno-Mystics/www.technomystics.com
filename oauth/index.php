@@ -6,6 +6,10 @@
 # Start server session
 session_start();
 
+if(isset($_GET['landing'])){
+	$final_landing = $_GET['landing'];
+}
+
 function generateNonce($length){
 	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -31,7 +35,12 @@ require 'include/oauth_config.php';
 # Set OAuth Parameters
 $response_type="code";
 $scope=urlencode("read");
-$tm_state=urlencode("token=".$hashed_secret."&auth_provider=mastodon");
+if($final_landing){
+	$tm_state=urlencode("token=".$hashed_secret."&auth_provider=mastodon&landing=".$final_landing);
+}
+else{
+	$tm_state=urlencode("token=".$hashed_secret."&auth_provider=mastodon");
+}
 
 // Complete Google OAuth URL
 # This is the URL we send the user to for signing-in/signing-up
