@@ -14,7 +14,7 @@ if(!isset($_SESSION['secret']))
 $secret=$_SESSION['secret'];
 $hashed_secret=hash('sha512',$secret);
 
-// Google returns information we can use to validate the user along with the state we passed earlier we check for validity on our side.
+// OAuth returns information we can use to validate the user along with the state we passed earlier we check for validity on our side.
 // We should be receiving a token and a auth_provider. Parse that out from $_GET['state'] or $_POST['state']
 if(isset($_GET['state'])){
 	if(preg_match('/^token=(.*)&auth_provider=(.*)&landing=(.*)$/',urldecode($_GET['state']),$matches)){
@@ -47,9 +47,6 @@ if(!$token || !$auth_provider){
 	error_log("Didn't receive token or auth_provider");
 	header("Location: /");
 }
-
-// Get Google's OpenID Discovery Document
-#$discover_doc = json_decode(file_get_contents($GOOGLE_DISCOVERY_DOCUMENT));
 
 # Validate token provided in state
 if($token == $hashed_secret){ // Valid Login, check Auth Provider
@@ -105,6 +102,7 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 		
 		#error_log("LoggedIn: ".$_SESSION['logged_in']);
 		error_log("login.php: Login Success - User: ".$_SESSION['username']);
+		error_log("final_landing: ".$final_landing);
 		switch ($final_landing) {
 			case "-":
 				header("Location: /");
@@ -121,9 +119,10 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 	
 }
 else{
+	// Wrong Session, try again
 	error_log("Invalid session for login.php");
-	error_log("token: ".$token);
-	error_log("Sesh: ".$hashed_secret);
+	#error_log("token: ".$token);
+	#error_log("Sesh: ".$hashed_secret);
 	header("Location: /");
 }
 

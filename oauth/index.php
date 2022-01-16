@@ -35,7 +35,7 @@ require 'include/oauth_config.php';
 # Set OAuth Parameters
 $response_type="code";
 $scope=urlencode("read");
-if($final_landing){
+if(isset($final_landing)){
 	$tm_state=urlencode("token=".$hashed_secret."&auth_provider=mastodon&landing=".$final_landing);
 }
 else{

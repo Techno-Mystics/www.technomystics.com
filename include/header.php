@@ -8,7 +8,7 @@
 			<a class="nav-link" id="m_social" href="https://social.technomystics.com">Social</a>
 			<a class="nav-link" id="m_discourse" href="https://discourse.technomystics.com">Discourse</a>
 			<a class="nav-link" id="m_matrix" href="https://matrix.to/#/#the-lodge:matrix.technomystics.com">Matrix</a>
-			<a class="nav-link" id="m_mail" href="https://mail.technomystics.com">Mail</a>
+			<a class="nav-link" id="m_mail" href="/mail">Mail</a>
 			<a class="nav-link" id="m_stats" href="/stats.php">Stats</a>
 			<?php
 				if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {

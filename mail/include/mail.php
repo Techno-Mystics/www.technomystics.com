@@ -9,7 +9,7 @@
 function generate_password($length = 12) {
 
     // define possible characters
-    $possible = "2345678923456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ"; # skip 0 and 1 to avoid confusion with O and>
+    $possible = "012345678923456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ"; # skip 0 and 1 to avoid confusion with O and>
 
     // add random characters to $password until $length is reached
     $password = "";
@@ -30,12 +30,14 @@ function create_new_mailbox($username, $domain, $quota, $pfdb) {
 	$status = array('error'=>true,'msg'=>'Failed');
 	
 	$full_email = $username."@".$domain;
+	// Random password for every new mailbox, users forced to login via OAuth via Webmail anyways. 
+	// SMTP OUT is disabled on public interfaces.
 	$new_password = generate_password();
 	$hashed_password = "{SHA512}".base64_encode(hash('sha512',$new_password,true));
 	
 	
 	// create mailbox
-	$new_mb_sql = "INSERT INTO mailbox (username,password,name,local_part,maildir,domain,quota,active) VALUES ('".$full_email."','".$hashed_password."','".$username."','".$username."','".$domain."/".$username."','".$domain."',".$quota.",'t')";
+	$new_mb_sql = "INSERT INTO mailbox (username,password,name,local_part,maildir,domain,quota,active,token_validity,password_expiry) VALUES ('".$full_email."','".$hashed_password."','".$username."','".$username."','".$domain."/".$username."/','".$domain."',".$quota.",'t',NOW(),NOW())";
 	$new_mb_ret = pg_query($pfdb,$new_mb_sql);
 	if($new_mb_ret){
 		$status['msg'] = "Mailbox Created";
