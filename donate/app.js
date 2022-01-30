@@ -6,11 +6,28 @@ App = {
     connected: false,
     web3: null,
     chainId: null,
-    acceptedNetworks: [ '1' , '1642824233213'], // 1642824233213 is the development network id
+    acceptedNetworks: [ 1 , 1643524146976, 1337 ],
     networkAccepted: false,
+    esJsonData: null,
+    ethPrice: null,
 
     // This is the first function called. Here we can setup stuff needed later
     init: async function() {
+
+        // Get the current price of ETH
+
+        var curPriceEth = $.ajax('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=WWH7NJNAQ3QC8BVAN2PA6JZ7PTAQ5KIYNW',{
+            dataType: 'json',
+            success: function (data,status,xhr) {
+                console.log("Eth->USD: "+data.result.ethusd);
+                App.ethPrice = parseFloat(data.result.ethusd);
+
+            },
+              error: function(jqXhr, textStatus, errorMessage){
+              console.log("ajax error: "+errorMessage);
+            }
+
+        });
         return await App.initWeb3();
     },
   
@@ -58,9 +75,9 @@ App = {
         App.web3 = new Web3(App.web3Provider);
         // Get current Blockchain Network and check if we accept
         App.chainId = await App.web3.eth.net.getId();
-        console.log("Chain ID: "+App.chainId.toString());
+        console.log("Chain ID: "+App.chainId);
 
-        if(App.acceptedNetworks.includes(App.chainId.toString())){
+        if(App.acceptedNetworks.includes(App.chainId)){
             console.log("Valid Blockchain Network");
             App.networkAccepted = true;
         }
@@ -99,13 +116,53 @@ App = {
 
     // Bind to some events to make our app function
     bindEvents: function() {
+        // Donate Button Clicked
         $(document).on('click', '.btn-donate', App.handleDonate);
 
+        // Account Changed in Wallet
         App.web3Provider.on('accountsChanged',(accounts) =>{
             App.handleAccountChange(accounts);
         });
 
-        App.web3Provider.on('chainChanged', (_chainId) => window.location.reload());
+        // Network Changed in Wallet
+        App.web3Provider.on('chainChanged', (chainId) => {
+            App.handleChainChange(chainId);
+        });
+
+        // Wallet received RPC Message
+        App.web3Provider.on('message',(message) =>{
+            handleRPCMessage(message);
+            console.log("Got Message Event");
+        });
+
+        // Update the donation amount in USD based on captured ETH->USD price earlier
+        $('#donation-amount').on("input",function(){
+            var amount = parseFloat($(this).val());
+            $('#usd-conv').text("~$"+(amount*App.ethPrice).toFixed(2));
+        
+        });
+
+
+    },
+
+    handleRPCMessage: function(message){
+        console.log(message);
+
+    },
+
+    // What happens when the user switches blockchain networks?
+    handleChainChange: function(chainId){
+        var newChainId = parseInt(chainId,16);
+        console.log("Changed to Network: "+newChainId);
+
+        if(App.acceptedNetworks.includes(newChainId)){
+            console.log("Valid Blockchain Network");
+            App.networkAccepted = true;
+        }
+
+        // For now we will just reload the page
+        window.location.reload();
+
 
     },
 
@@ -119,8 +176,8 @@ App = {
             App.transferEth(App.accounts[0].toString(),App.donateTo.toString(),amount.toString());
 
             // Transaction attempted, zero out the textbox.
-
             $('#donation-amount').val(0);
+            $('#usd-conv').text('~$0.00');
 
         }
         else{
@@ -167,4 +224,4 @@ $(function() {
     $(document).ready(function() {
       App.init();
     });
-  });
+});

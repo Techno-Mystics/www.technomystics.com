@@ -1,3 +1,10 @@
+
+<?php
+# Start server session
+session_start();
+
+?>
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -50,44 +57,55 @@
 
       <body class="d-flex h-100 text-center text-white bg-dark">
 
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-push-2">
-              <h1 class="text-center">Donate to TechnoMystics</h1>
-              <p>TechnoMystics is now accepting donations in Ethereum</p>
-              <p>We utilize Web3.js to connect to your browser extension wallet</p>
-              <hr/>
-              <br/>
-            </div>
-          </div>
-    
-          <div id="donateRow" class="row">
-            <!-- PETS LOAD HERE -->
-          </div>
-        </div>
-    
-        <div id="donateTemplate" style="display: none;">
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="panel panel-default panel-pet">
-              <div class="panel-heading">
-                <h3 class="panel-title">Donate Ethereum</h3>
-              </div>
-              <div class="panel-body">
-                <br/><br/>
-                <img src="/media/pics/ethcoin.png" height="100px">
-                <br><br>
-                <input type="number" id="donation-amount" value="0">
-                <br><br>
-                <button id="donate-button" class="btn btn-light btn-donate" type="button">Donate</button>
+      <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <?php
+        include '../include/header.php';
+      ?>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-8 col-sm-push-2">
+                <h1 class="text-center">Donate to TechnoMystics</h1>
+                <p>TechnoMystics is now accepting donations in Ethereum</p>
+                <p>We utilize Web3.js to connect to your browser extension wallet</p>
+                <hr/>
+                <br/>
               </div>
             </div>
+      
+            <div id="donateRow" class="row">
+              <!-- PETS LOAD HERE -->
+            </div>
           </div>
-        </div>
+      
+          <div id="donateTemplate" style="display: none;">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="panel panel-default panel-pet">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Donate Ethereum</h3>
+                </div>
+                <div class="panel-body">
+                  <br/><br/>
+                  <img src="/media/pics/ethcoin.png" height="100px">
+                  <br><br>
+                  <input type="number" id="donation-amount" value="0">
+                  <br><br>
+                  <small id="usd-conv">~$0.00</small>
+                  <br><br>
+                  <button id="donate-button" class="btn btn-light btn-donate" type="button">Donate</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
-          <small id="alert-title">alert</small>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+          <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+            <small id="alert-title">alert</small>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
 
+
+          <?php
+            include '../include/footer.php';
+          ?>
+        </div>
       </body>
 </html>
