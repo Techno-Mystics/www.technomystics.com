@@ -1,6 +1,7 @@
 <?php
 # Start server session
 session_start();
+
 ?>
 
 <html>
@@ -11,7 +12,7 @@ session_start();
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
 	<title>Stats.TechnoMystics.com</title>
-	
+  <link rel="icon" type="image/png" href="https://discourse.technomystics.com/uploads/default/optimized/1X/ea2a40c6e7df3ff4835089c1cd2bed1298710b87_2_32x32.jpeg">
 	<!-- Bootstrap core CSS -->
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 
