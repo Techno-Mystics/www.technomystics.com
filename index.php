@@ -115,10 +115,10 @@ You can view our server <a href="/stats.php" class="link-light">status</a> anyti
   <p>TechnoMystics is hosted by Digitalocean and currently costs ~$100/mo to operate.</p>
 </div>
 
-
 <?php
 include 'include/footer.php';
 ?>
+
 </div>
 
 

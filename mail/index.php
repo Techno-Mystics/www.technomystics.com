@@ -9,6 +9,7 @@ require 'include/mail.php';
 // First, is the user logged in?
 // if not, redirect them to do so
 if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false) {
+	error_log("mail/index.php: User not logged in, redirecting");
 	header("Location: /oauth/index.php?landing=mail");
 	die;
 }

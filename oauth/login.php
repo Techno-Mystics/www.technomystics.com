@@ -56,6 +56,7 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 		echo "Auth Code: ".$_GET['code']."<br>";
 	
 		// GET AUTH TOKEN
+		error_log("oauth/login.php: GET AUTH TOKEN");
 		# Set Parameters
 		$data = array('code' => $_GET['code'], 'client_id' => $client_id, 'client_secret' => $client_secret, 'grant_type' => 'authorization_code', 'redirect_uri' => $redirect_url);
 		$data_json = json_encode($data);
@@ -78,6 +79,7 @@ if($token == $hashed_secret){ // Valid Login, check Auth Provider
 		#echo "Access Token: ".$bearer_token."<br>";
 		
 		// Verify Credentials
+		error_log("oauth/login.php: VERIFY CREDENTIALS");
 		$verify_url = "https://social.technomystics.com/api/v1/accounts/verify_credentials";
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $verify_url);

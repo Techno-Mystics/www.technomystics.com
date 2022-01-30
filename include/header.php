@@ -5,10 +5,10 @@
 		<h3 class="float-md-start mb-0"><img src="/media/pics/technomystic.png" height="100px"></h3>
 		<nav class="nav nav-masthead justify-content-center float-md-end">
 			<a class="nav-link" id="m_home" aria-current="page" href="/">Home</a>
-			<a class="nav-link" id="m_social" href="https://social.technomystics.com">Social</a>
-			<a class="nav-link" id="m_discourse" href="https://discourse.technomystics.com">Discourse</a>
-			<a class="nav-link" id="m_matrix" href="https://matrix.to/#/#the-lodge:matrix.technomystics.com">Matrix</a>
-			<a class="nav-link" id="m_mail" href="/mail">Mail</a>
+			<a class="nav-link" id="m_social" target="_blank" href="https://social.technomystics.com">Social</a>
+			<a class="nav-link" id="m_discourse" target="_blank" href="https://discourse.technomystics.com">Discourse</a>
+			<a class="nav-link" id="m_matrix" target="_blank" href="https://matrix.to/#/#the-lodge:matrix.technomystics.com">Matrix</a>
+			<a class="nav-link" id="m_mail" target="_blank" href="/mail">Mail</a>
 			<a class="nav-link" id="m_stats" href="/stats.php">Stats</a>
 			<?php
 				if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {

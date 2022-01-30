@@ -48,6 +48,7 @@ $mastodon_auth_url = $oauth_auth_endpoint."?response_type=".$response_type."&cli
 
 // forward the user to mastodon oauth
 //echo $mastodon_auth_url;
-header("Location: ".$mastodon_auth_url);
 
+header("Location: ".$mastodon_auth_url);
+exit;
 ?>

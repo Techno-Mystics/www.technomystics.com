@@ -6,17 +6,17 @@ App = {
     connected: false,
     web3: null,
     chainId: null,
-    acceptedNetworks: [ 1 , 1643524146976, 1337 ],
+    acceptedNetworks: [ 1 , 1643524146976, 1337, 80001 ],
     networkAccepted: false,
     esJsonData: null,
     ethPrice: null,
+    latestTXHash: null,
 
     // This is the first function called. Here we can setup stuff needed later
     init: async function() {
 
-        // Get the current price of ETH
-
-        var curPriceEth = $.ajax('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=WWH7NJNAQ3QC8BVAN2PA6JZ7PTAQ5KIYNW',{
+        // Get the current price of ETH from etherscan.io
+        var curPriceEth = $.ajax('https://www.technomystics.com/donate/include/etherStatsAPI.php',{
             dataType: 'json',
             success: function (data,status,xhr) {
                 console.log("Eth->USD: "+data.result.ethusd);
@@ -28,6 +28,7 @@ App = {
             }
 
         });
+
         return await App.initWeb3();
     },
   
@@ -131,7 +132,7 @@ App = {
 
         // Wallet received RPC Message
         App.web3Provider.on('message',(message) =>{
-            handleRPCMessage(message);
+            App.handleRPCMessage(message);
             console.log("Got Message Event");
         });
 
@@ -146,8 +147,23 @@ App = {
     },
 
     handleRPCMessage: function(message){
-        console.log(message);
+        //console.log(message);
+        if(App.latestTXHash.blockHash){
+            if(message.data.result.hash == App.latestTXHash.blockHash){
+                console.log(message);
+                // Alert the user that their transaction has been submitted.
+                var container = $('#container');
+                var alert = $('#alert');
+                alert.find('#alert-title').html('Transaction Successful: <a href="https://mumbai.polygonscan.com/tx/'+App.latestTXHash.transactionHash+'" target="_blank" class="alert-link">'+App.latestTXHash.transactionHash+'</a>');
+                alert.show();
+                container.append(alert.html());
+                setTimeout(function(){
+                    alert.hide();
+                },6000);
 
+
+            }
+        }
     },
 
     // What happens when the user switches blockchain networks?
@@ -203,8 +219,8 @@ App = {
     },
 
     // Perform and ETH transaction on the mainnet
-    transferEth: function(sender,receiver,amount){
-        App.web3.eth.sendTransaction({
+    transferEth: async function(sender,receiver,amount){
+        var txHash = await App.web3.eth.sendTransaction({
             to:receiver,
             from:sender,
             value:App.web3.utils.toWei(amount,"ether")
@@ -212,10 +228,23 @@ App = {
             if(err){
                 window.alert(err.message);
             }
-            else{
-                alert("Transaction Accepted. Thank you for your donation of "+amount+" ETH.");
-            }
         });
+        // Record the last txHash
+        console.log(txHash);
+        App.latestTXHash = txHash;
+
+        // Alert the user that their transaction has been submitted.
+        
+        var container = $('#container');
+        var alert = $('#alert');
+        alert.find('#alert-title').html('Transaction Submitted: <a href="https://mumbai.polygonscan.com/tx/'+txHash.transactionHash+'" target="_blank" class="alert-link">'+txHash.transactionHash+'</a>');
+        alert.show();
+        container.append(alert.html());
+        setTimeout(function(){
+            alert.hide();
+        },6000);
+       
+
     }
 }
 

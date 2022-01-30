@@ -65,7 +65,7 @@ session_start();
             <div class="row">
               <div class="col-xs-12 col-sm-8 col-sm-push-2">
                 <h1 class="text-center">Donate to TechnoMystics</h1>
-                <p>TechnoMystics is now accepting donations in Ethereum</p>
+                <p>TechnoMystics is now accepting donations in Polygon (MATIC)</p>
                 <p>We utilize Web3.js to connect to your browser extension wallet</p>
                 <hr/>
                 <br/>
@@ -81,11 +81,11 @@ session_start();
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="panel panel-default panel-pet">
                 <div class="panel-heading">
-                  <h3 class="panel-title">Donate Ethereum</h3>
+                  <h3 class="panel-title">Donate Polygon (MATIC)</h3>
                 </div>
                 <div class="panel-body">
                   <br/><br/>
-                  <img src="/media/pics/ethcoin.png" height="100px">
+                  <img src="/media/pics/polygon-matic-logo.png" height="100px">
                   <br><br>
                   <input type="number" id="donation-amount" value="0">
                   <br><br>
