@@ -2,9 +2,10 @@
 
 require 'config.php';
 
-
+$url = $POLYSCAN_MAIN_ENDPOINT."?module=stats&action=maticprice&apikey=".$POLYSCAN_API_KEY;
+//echo $url;
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $ETHERSCAN_MAIN_ENDPOINT."?module=stats&action=ethprice&apikey=".$ETHERSCAN_API_KEY);
+curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 # Receive JWT Response

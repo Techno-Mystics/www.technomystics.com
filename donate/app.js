@@ -6,7 +6,7 @@ App = {
     connected: false,
     web3: null,
     chainId: null,
-    acceptedNetworks: [ 1 , 1643524146976, 1337, 80001 ],
+    acceptedNetworks: [ 80001 ],
     networkAccepted: false,
     esJsonData: null,
     ethPrice: null,
@@ -16,11 +16,11 @@ App = {
     init: async function() {
 
         // Get the current price of ETH from etherscan.io
-        var curPriceEth = $.ajax('https://www.technomystics.com/donate/include/etherStatsAPI.php',{
+        var curPriceEth = $.ajax('https://www.technomystics.com/donate/include/polyStatsAPI.php',{
             dataType: 'json',
             success: function (data,status,xhr) {
-                console.log("Eth->USD: "+data.result.ethusd);
-                App.ethPrice = parseFloat(data.result.ethusd);
+                console.log("MATIC->USD: "+data.result.maticusd);
+                App.ethPrice = parseFloat(data.result.maticusd);
 
             },
               error: function(jqXhr, textStatus, errorMessage){
