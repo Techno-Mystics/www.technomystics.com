@@ -13,6 +13,8 @@ App = {
     esJsonData: null,
     maticPrice: null,
     latestTXHash: null,
+    opexMonthly: 100,
+
 
     // This is the first function called. Here we can setup stuff needed later
     init: async function() {
@@ -37,8 +39,9 @@ App = {
             success: function (data,status,xhr) {
                 App.currentBalance = parseFloat(data.result * 1000000000000000000);
                 console.log("Current Balance: "+App.currentBalance);
-                App.currentUSDBalance = (App.currentBalance * App.maticPrice).toFixed(2);
+                App.currentUSDBalance = Number((App.currentBalance * App.maticPrice).toPrecision(3)).toString().split('e')[0];
                 console.log("Current USD Balance: "+App.currentUSDBalance);
+                //console.log(typeof App.currentUSDBalance);
 
             },
               error: function(jqXhr, textStatus, errorMessage){
@@ -103,7 +106,7 @@ App = {
         console.log("App.connected: "+App.connected);
       }
 
-      return App.drawDonateForm();
+      return App.drawAccountTemplate();
     },
 
     // Draw the form for donating ETH on the mainnet
@@ -129,13 +132,22 @@ App = {
 
         donateRow.append(donateTemplate.html());
 
-        return App.drawAccountTemplate();
+        return App.bindEvents();
     },
 
     drawAccountTemplate: function(){
         console.log("Drawing Account Template");
 
-        return App.bindEvents();
+        var donateRow = $('#donateRow');
+        var accountTemplate = $('#accountTemplate');
+
+        accountTemplate.find('#balance-amount').text(App.currentBalance+' MATIC');
+        accountTemplate.find('#usd-conv').text('$'+App.currentUSDBalance);
+        accountTemplate.find('#cur-opex').text('Current Monthly Expense: $'+App.opexMonthly);
+
+        donateRow.append(accountTemplate.html());
+
+        return App.drawDonateForm();
     },
 
     // Bind to some events to make our app function
@@ -162,7 +174,7 @@ App = {
         // Update the donation amount in USD based on captured ETH->USD price earlier
         $('#donation-amount').on("input",function(){
             var amount = parseFloat($(this).val());
-            $('#usd-conv').text("~$"+(amount*App.maticPrice).toFixed(2));
+            $('#usd-conv-donation').text("~$"+(amount*App.maticPrice).toFixed(2));
         
         });
 
@@ -216,7 +228,7 @@ App = {
 
             // Transaction attempted, zero out the textbox.
             $('#donation-amount').val(0);
-            $('#usd-conv').text('~$0.00');
+            $('#usd-conv-donation').text('~$0.00');
 
         }
         else{

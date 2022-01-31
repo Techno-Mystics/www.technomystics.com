@@ -62,7 +62,7 @@ session_start();
         include '../include/header.php';
       ?>
           <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
               <div class="col-xs-12 col-sm-8 col-sm-push-2">
                 <h1 class="text-center">Donate to TechnoMystics</h1>
                 <p>TechnoMystics is now accepting donations in Polygon (MATIC)</p>
@@ -72,12 +72,12 @@ session_start();
               </div>
             </div>
       
-            <div id="donateRow" class="row">
+            <div id="donateRow" class="row justify-content-center">
               <!-- PETS LOAD HERE -->
             </div>
           </div>
       
-          <div id="donateTemplate" style="display: none;">
+          <div id="donateTemplate" class="mx-auto" style="display: none;">
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="panel panel-default panel-pet">
                 <div class="panel-heading">
@@ -87,10 +87,12 @@ session_start();
                   <br/><br/>
                   <img src="/media/pics/polygon-matic-logo.png" height="100px">
                   <br><br>
-                  <input type="number" id="donation-amount" value="0">
-                  <br><br>
-                  <small id="usd-conv">~$0.00</small>
-                  <br><br>
+                  <div class="input-group mb-3 input-group-sm">
+                    <span class="input-group-text">MATIC</span>
+                    <input type="text" id="donation-amount" class="form-control col-xs-4" aria-label="Amount in MATIC" width="300px">
+                    <span id="usd-conv-donation" class="input-group-text">$-</span>
+                  </div>
+                  
                   <button id="donate-button" class="btn btn-light btn-donate" type="button">Donate</button>
                 </div>
               </div>
@@ -101,15 +103,15 @@ session_start();
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="panel panel-default panel-pet">
                   <div class="panel-heading">
-                    <h3 class="panel-title">Account Balance</h3>
+                    <h3 class="panel-title">Current Account Balance</h3>
                   </div>
                   <div class="panel-body">
                     <br><br>
                     <h2 id="balance-amount">0</h2>
                     <br><br>
-                    <small id="usd-conv">~$0.00</small>
+                    <p id="usd-conv">~$0.00</p><br>
+                    <small id="cur-opex">Current Monthly Expenses: -</small>
                     <br><br>
-                    <button id="donate-button" class="btn btn-light btn-donate" type="button">Donate</button>
                   </div>
                 </div>
               </div>
