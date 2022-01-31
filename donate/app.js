@@ -2,6 +2,8 @@ App = {
     web3Provider: null,
     accounts: [],
     donateTo: '0x3cE8Ee797ce0dc3ACbDf308f4E504EB0f6149737',
+    currentBalance: null,
+    currentUSDBalance: null,
     contracts: {},
     connected: false,
     web3: null,
@@ -9,24 +11,39 @@ App = {
     acceptedNetworks: [ 80001 ],
     networkAccepted: false,
     esJsonData: null,
-    ethPrice: null,
+    maticPrice: null,
     latestTXHash: null,
 
     // This is the first function called. Here we can setup stuff needed later
     init: async function() {
 
         // Get the current price of ETH from etherscan.io
-        var curPriceEth = $.ajax('https://www.technomystics.com/donate/include/polyStatsAPI.php',{
+        var curPriceEth = await $.ajax('https://www.technomystics.com/donate/include/polyStatsAPI.php?cmd=maticprice',{
             dataType: 'json',
             success: function (data,status,xhr) {
                 console.log("MATIC->USD: "+data.result.maticusd);
-                App.ethPrice = parseFloat(data.result.maticusd);
+                App.maticPrice = parseFloat(data.result.maticusd);
 
             },
               error: function(jqXhr, textStatus, errorMessage){
               console.log("ajax error: "+errorMessage);
             }
 
+        });
+
+        // Get current balance of account
+        var curBalance = await $.ajax('https://www.technomystics.com/donate/include/polyStatsAPI.php?cmd=accountbalance',{
+            dataType: 'json',
+            success: function (data,status,xhr) {
+                App.currentBalance = parseFloat(data.result * 1000000000000000000);
+                console.log("Current Balance: "+App.currentBalance);
+                App.currentUSDBalance = (App.currentBalance * App.maticPrice).toFixed(2);
+                console.log("Current USD Balance: "+App.currentUSDBalance);
+
+            },
+              error: function(jqXhr, textStatus, errorMessage){
+              console.log("ajax error: "+errorMessage);
+            }
         });
 
         return await App.initWeb3();
@@ -112,6 +129,12 @@ App = {
 
         donateRow.append(donateTemplate.html());
 
+        return App.drawAccountTemplate();
+    },
+
+    drawAccountTemplate: function(){
+        console.log("Drawing Account Template");
+
         return App.bindEvents();
     },
 
@@ -139,7 +162,7 @@ App = {
         // Update the donation amount in USD based on captured ETH->USD price earlier
         $('#donation-amount').on("input",function(){
             var amount = parseFloat($(this).val());
-            $('#usd-conv').text("~$"+(amount*App.ethPrice).toFixed(2));
+            $('#usd-conv').text("~$"+(amount*App.maticPrice).toFixed(2));
         
         });
 

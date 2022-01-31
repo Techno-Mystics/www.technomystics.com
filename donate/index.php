@@ -97,6 +97,24 @@ session_start();
             </div>
           </div>
 
+          <div id="accountTemplate" style="display: none;">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-default panel-pet">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Account Balance</h3>
+                  </div>
+                  <div class="panel-body">
+                    <br><br>
+                    <h2 id="balance-amount">0</h2>
+                    <br><br>
+                    <small id="usd-conv">~$0.00</small>
+                    <br><br>
+                    <button id="donate-button" class="btn btn-light btn-donate" type="button">Donate</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+
           <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
             <small id="alert-title">alert</small>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
