@@ -66,13 +66,25 @@ session_start();
               <div class="col-xs-12 col-sm-8 col-sm-push-2">
                 <h1 class="text-center">Donate to TechnoMystics</h1>
                 <p>TechnoMystics is now accepting donations in Polygon (MATIC)</p>
-                <p>We utilize Web3.js to connect to your browser extension wallet</p>
+                <p><a href="https://polygon.technology/" target="_blank" class="link-light">Polygon</a> connects multiple Ethereum compatible blockchains and helps us minimize transaction fees.</p>
+                <p>Donate using our Web3 app below or send Polygon(MATIC) directly to our address: <a href="https://polygonscan.com/address/0x3cE8Ee797ce0dc3ACbDf308f4E504EB0f6149737" target="_blank" class="link-light">0x3cE8Ee797ce0dc3ACbDf308f4E504EB0f6149737</a></p>
+                <hr/>
+                <h3 id="goal-progress-title">Progress Towards Monthly Goal: $-</h3>
+                <div class="progress" id="goal-progress" style="display: none;">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                </div>
+
+
                 <hr/>
                 <br/>
               </div>
             </div>
       
             <div id="donateRow" class="row justify-content-center">
+              <!-- Loading Spinner -->
+              <div id="loading-spinner" class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
               <!-- PETS LOAD HERE -->
             </div>
           </div>
@@ -94,23 +106,27 @@ session_start();
                   </div>
                   
                   <button id="donate-button" class="btn btn-light btn-donate" type="button">Donate</button>
+                  <button id="switch-to-matic" class="btn btn-light btn-switch" type="button" style="display: none;">Switch to Polygon</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div id="accountTemplate" style="display: none;">
+          <div id="getWallet" style="display: none;">
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="panel panel-default panel-pet">
                   <div class="panel-heading">
-                    <h3 class="panel-title">Current Account Balance</h3>
+                    <h3 class="panel-title">No Wallet Detected</h3>
                   </div>
                   <div class="panel-body">
                     <br><br>
-                    <h2 id="balance-amount">0</h2>
+                    <h4 id="message">You need a crypto wallet and some Polygon (MATIC) to donate. We recommend <a href="https://metamask.io" target="_blank" class="link-light">Metamask</a>!</h4>
+                    <a href="https://metamask.io" target="_blank"><img src="/media/pics/metamaskicon.png" width="100px"></a>
                     <br><br>
-                    <p id="usd-conv">~$0.00</p><br>
-                    <small id="cur-opex">Current Monthly Expenses: -</small>
+                    <small>Once installed, <a href="/donate/" class="link-light">reload</a> this page.</small>
+
+
+
                     <br><br>
                   </div>
                 </div>
@@ -128,4 +144,8 @@ session_start();
           ?>
         </div>
       </body>
+
+      <script>
+        setMenuItem("m_donate");
+      </script>
 </html>

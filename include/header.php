@@ -10,6 +10,9 @@
 			<a class="nav-link" id="m_matrix" target="_blank" href="https://matrix.to/#/#the-lodge:matrix.technomystics.com">Matrix</a>
 			<a class="nav-link" id="m_mail" target="_blank" href="/mail">Mail</a>
 			<a class="nav-link" id="m_stats" href="/stats.php">Stats</a>
+			<a class="nav-link" id="m_about" href="/about.php">About</a>
+			<a class="nav-link" id="m_donate" href="/donate/">Donate</a>
+
 			<?php
 				if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
 					error_log("header.php: Logged In User: ".$_SESSION['username']);

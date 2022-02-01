@@ -4,11 +4,12 @@ App = {
     donateTo: '0x3cE8Ee797ce0dc3ACbDf308f4E504EB0f6149737',
     currentBalance: null,
     currentUSDBalance: null,
+    currentGoalPercent: null,
     contracts: {},
     connected: false,
     web3: null,
     chainId: null,
-    acceptedNetworks: [ 80001 ],
+    acceptedNetworks: [ 137 ],
     networkAccepted: false,
     esJsonData: null,
     maticPrice: null,
@@ -18,13 +19,15 @@ App = {
 
     // This is the first function called. Here we can setup stuff needed later
     init: async function() {
+        // Show loading spinner
+        App.loadingSpinner(true);
 
         // Get the current price of ETH from etherscan.io
         var curPriceEth = await $.ajax('https://www.technomystics.com/donate/include/polyStatsAPI.php?cmd=maticprice',{
             dataType: 'json',
             success: function (data,status,xhr) {
                 console.log("MATIC->USD: "+data.result.maticusd);
-                App.maticPrice = parseFloat(data.result.maticusd);
+                App.maticPrice = data.result.maticusd;
 
             },
               error: function(jqXhr, textStatus, errorMessage){
@@ -37,9 +40,10 @@ App = {
         var curBalance = await $.ajax('https://www.technomystics.com/donate/include/polyStatsAPI.php?cmd=accountbalance',{
             dataType: 'json',
             success: function (data,status,xhr) {
-                App.currentBalance = parseFloat(data.result * 1000000000000000000);
+                console.log("Balance API Result: "+data.result)
+                App.currentBalance = parseFloat((data.result / 1000000000000000000).toString().split('e')[0]);
                 console.log("Current Balance: "+App.currentBalance);
-                App.currentUSDBalance = Number((App.currentBalance * App.maticPrice).toPrecision(3)).toString().split('e')[0];
+                App.currentUSDBalance = parseFloat((App.currentBalance * App.maticPrice).toString().split('e')[0]).toFixed(2);
                 console.log("Current USD Balance: "+App.currentUSDBalance);
                 //console.log(typeof App.currentUSDBalance);
 
@@ -48,6 +52,20 @@ App = {
               console.log("ajax error: "+errorMessage);
             }
         });
+
+        // Discover Percent of Progress
+        App.currentGoalPercent = ((App.currentUSDBalance / App.opexMonthly) * 100).toFixed(0);
+        console.log("Current Percentage: "+App.currentGoalPercent);
+        if(App.currentGoalPercent > 100){
+            App.currentGoalPercent = 100;
+        }
+
+        // Draw the bar
+        $('#goal-progress-title').text("Progress Towards Monthly Goal: $"+App.opexMonthly);
+        $('#goal-progress').find('.progress-bar').css('width',App.currentGoalPercent+"%");
+        $('#goal-progress').find('.progress-bar').prop('aria-valuenow',App.currentGoalPercent);
+        $('#goal-progress').find('.progress-bar').text(App.currentGoalPercent+"%");
+        $('#goal-progress').show();
 
         return await App.initWeb3();
     },
@@ -104,9 +122,18 @@ App = {
         }
         
         console.log("App.connected: "+App.connected);
+        return App.drawDonateForm();
+      }
+      else{
+          return App.drawWalletOptions();
+          
       }
 
-      return App.drawAccountTemplate();
+    },
+
+    drawWalletOptions: function(){
+        $('#getWallet').show();
+        App.loadingSpinner(false);
     },
 
     // Draw the form for donating ETH on the mainnet
@@ -127,7 +154,8 @@ App = {
             donateTemplate.find('.btn-donate').prop("disabled",false);
         }
         else{
-            donateTemplate.find('.btn-donate').prop("disabled",true);
+            donateTemplate.find('.btn-donate').hide();
+            donateTemplate.find('.btn-switch').show();
         }
 
         donateRow.append(donateTemplate.html());
@@ -135,25 +163,21 @@ App = {
         return App.bindEvents();
     },
 
-    drawAccountTemplate: function(){
-        console.log("Drawing Account Template");
 
-        var donateRow = $('#donateRow');
-        var accountTemplate = $('#accountTemplate');
 
-        accountTemplate.find('#balance-amount').text(App.currentBalance+' MATIC');
-        accountTemplate.find('#usd-conv').text('$'+App.currentUSDBalance);
-        accountTemplate.find('#cur-opex').text('Current Monthly Expense: $'+App.opexMonthly);
+    switchNetwork: async function(){
+        await window.ethereum.request({ method: "wallet_switchEthereumChain",
+            params: [{ chainId: '0x89'}] });
 
-        donateRow.append(accountTemplate.html());
-
-        return App.drawDonateForm();
     },
 
     // Bind to some events to make our app function
     bindEvents: function() {
         // Donate Button Clicked
         $(document).on('click', '.btn-donate', App.handleDonate);
+
+        // Switch to Polygon Network
+        $(document).on('click', '.btn-switch', App.switchNetwork);
 
         // Account Changed in Wallet
         App.web3Provider.on('accountsChanged',(accounts) =>{
@@ -178,18 +202,21 @@ App = {
         
         });
 
+        // Should be finished loading by now
+        App.loadingSpinner(false);
+
 
     },
 
     handleRPCMessage: function(message){
         //console.log(message);
-        if(App.latestTXHash.blockHash){
+        if(App.latestTXHash){
             if(message.data.result.hash == App.latestTXHash.blockHash){
                 console.log(message);
                 // Alert the user that their transaction has been submitted.
                 var container = $('#container');
                 var alert = $('#alert');
-                alert.find('#alert-title').html('Transaction Successful: <a href="https://mumbai.polygonscan.com/tx/'+App.latestTXHash.transactionHash+'" target="_blank" class="alert-link">'+App.latestTXHash.transactionHash+'</a>');
+                alert.find('#alert-title').html('Transaction Successful: <a href="https://polygonscan.com/tx/'+App.latestTXHash.transactionHash+'" target="_blank" class="alert-link">'+App.latestTXHash.transactionHash+'</a>');
                 alert.show();
                 container.append(alert.html());
                 setTimeout(function(){
@@ -218,13 +245,13 @@ App = {
     },
 
     // Handle accepting donations via the Donate button
-    handleDonate: function() {
+    handleDonate: async function() {
         var amount = $('#donation-amount').val();
         var sender = App.accounts[0];
      
         // Amount must be greater than 0
         if(amount > 0){
-            App.transferEth(App.accounts[0].toString(),App.donateTo.toString(),amount.toString());
+            await App.transferEth(App.accounts[0].toString(),App.donateTo.toString(),amount.toString());
 
             // Transaction attempted, zero out the textbox.
             $('#donation-amount').val(0);
@@ -272,7 +299,7 @@ App = {
         
         var container = $('#container');
         var alert = $('#alert');
-        alert.find('#alert-title').html('Transaction Submitted: <a href="https://mumbai.polygonscan.com/tx/'+txHash.transactionHash+'" target="_blank" class="alert-link">'+txHash.transactionHash+'</a>');
+        alert.find('#alert-title').html('Transaction Submitted: <a href="https://polygonscan.com/tx/'+txHash.transactionHash+'" target="_blank" class="alert-link">'+txHash.transactionHash+'</a>');
         alert.show();
         container.append(alert.html());
         setTimeout(function(){
@@ -280,6 +307,15 @@ App = {
         },6000);
        
 
+    },
+
+    loadingSpinner: function(show) {
+        if(show == true){
+            $('#loading-spinner').show();
+        }
+        else{
+            $('#loading-spinner').hide();
+        }
     }
 }
 

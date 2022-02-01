@@ -43,9 +43,7 @@ session_start();
     <script src="/js/all.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 
-    <!-- jQuery for goal progress -->
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
   </head>
 <body class="d-flex h-100 text-center text-white bg-dark">
@@ -69,11 +67,54 @@ include 'include/header.php';
     </div>
 
 
+<p>
+TechnoMystics.com is just a domain
+Who knows what it will become
+or if it will become anything at all.
+</p>
+
+<p>
+Here at least <a class="link-light" href="https://social.technomystics.com/@mpoletiek">one man</a> toils to provide
+a safe, free place to call home.
+</p>
+
+<p>
+Starting with the most basic services
+built on Open Source Software
+federated and decentralized as much as possible.
+</p>
+
+<p>
+Get started with an account on our <a href="https://social.technomystics.com" class="link-light">Mastodon</a> instance.
+An open source microblogging platform connected to
+other instances around the world.
+</p>
+
+<p>
+Chat on <a class="link-light" href="https://matrix.technomystics.com">Matrix</a>, the cutting edge communication protocol
+and communicate with people chatting on other Matrix 
+servers as well as IRC, Gitter, and Discord.
+</p>
+
+<p>
+Prefer something at a different pace?
+Write well thought out posts in our forums running <a href="https://discourse.technomystics.com/" class="link-light">Discourse</a>
+Also open source and packed full of modern features.
+</p>
+
+<p>
+Need to send and receive email?
+Every account comes with a 300MB inbox
+and can send and receive mail using our <a href="https://technomystics.com/mail/" class="link-light">Webmail</a> running Roundcube.
+</p>
+
+<p>
+Technomystics.com is paid for out of the kindness of someone's heart.
+If you feel like contributing our source code repo at <a href="https://github.com/techno-mystics/" class="link-light">GitHub</a> is public.
+You can view our server <a href="/stats.php" class="link-light">status</a> anytime as well.
+</p>
 
 
-<div>
-  <h2>Enabling Personal Digital Soveriegnty Since 2022</h2>
-</div>
 
 <?php
 include 'include/footer.php';
@@ -86,11 +127,8 @@ include 'include/footer.php';
   </body>
 
 <script>
-setMenuItem("m_home");
+setMenuItem("m_about");
 </script>
-
-<script src="/js/donationProgress.js"></script>
-
 
 </html>
 

@@ -1,4 +1,4 @@
-let menuIds = ['m_home','m_social','m_discourse','m_matrix','m_mail','m_stats','m_avatar'];
+let menuIds = ['m_home','m_social','m_discourse','m_matrix','m_mail','m_stats','m_avatar','m_about'];
 
 function setMenuItem(id) {
 	menuIds.forEach((item, index) => {
